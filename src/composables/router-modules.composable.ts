@@ -2,14 +2,22 @@ import type {
   ICompiledRouterModule,
   IRouterModuleCompiler,
 } from "../interfaces/router-module.interface";
-import { type Router, RouteRecordRaw } from "vue-router";
 import type { IModule } from "../interfaces/module.interface";
 
-export function compileRouterFromModule(
-  module: IModule,
-  createRouter: (routes: RouteRecordRaw[]) => Router,
-): Router {
-  const compiledModule = module as ICompiledRouterModule;
+export function compileRouterFromModule<
+  TRouter extends {
+    beforeEach(hook: TNavigationGuard): void;
+    afterEach(hook: TNavigationHookAfter): void;
+  },
+  TRouteRecord,
+  TNavigationGuard,
+  TNavigationHookAfter,
+>(module: IModule, createRouter: (routes: TRouteRecord[]) => TRouter): TRouter {
+  const compiledModule = module as ICompiledRouterModule<
+    TRouteRecord,
+    TNavigationGuard,
+    TNavigationHookAfter
+  >;
   const routes = compiledModule.compiledRoutes ?? [];
   const beforeEach = compiledModule.compiledBeforeEach ?? [];
   const afterEach = compiledModule.compiledAfterEach ?? [];

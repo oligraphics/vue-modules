@@ -1,26 +1,46 @@
-import type { IModule } from './module.interface'
-import type { NavigationGuard, NavigationHookAfter, RouteRecordRaw } from 'vue-router'
+import type { IModule } from "./module.interface";
 import type {
   IModuleCompiler,
   IModuleValueCompiler,
-} from './module-compiler.interface'
+} from "./module-compiler.interface";
 
-export type IRouterModule = {
-  routes?: RouteRecordRaw[]
-  beforeEach?: NavigationGuard | NavigationGuard[]
-  afterEach?: NavigationHookAfter | NavigationHookAfter[]
-} & IModule
+export type IRouterModule<
+  TRouteRecord = unknown,
+  TNavigationGuard = unknown,
+  TNavigationHookAfter = unknown,
+> = {
+  routes?: TRouteRecord[];
+  beforeEach?: TNavigationGuard | TNavigationGuard[];
+  afterEach?: TNavigationHookAfter | TNavigationHookAfter[];
+} & IModule;
 
-export type IRouterModuleCompiler = IModuleCompiler & {
+export type IRouterModuleCompiler<
+  TRouteRecord = unknown,
+  TNavigationGuard = unknown,
+  TNavigationHookAfter = unknown,
+> = IModuleCompiler & {
   props: {
-    compiledRoutes: IModuleValueCompiler<IRouterModule, RouteRecordRaw>
-    compiledBeforeEach: IModuleValueCompiler<IRouterModule, NavigationGuard>
-    compiledAfterEach: IModuleValueCompiler<IRouterModule, NavigationHookAfter>
-  }
-}
+    compiledRoutes: IModuleValueCompiler<
+      IRouterModule<TRouteRecord, TNavigationGuard, TNavigationHookAfter>,
+      TRouteRecord
+    >;
+    compiledBeforeEach: IModuleValueCompiler<
+      IRouterModule<TRouteRecord, TNavigationGuard, TNavigationHookAfter>,
+      TNavigationGuard
+    >;
+    compiledAfterEach: IModuleValueCompiler<
+      IRouterModule<TRouteRecord, TNavigationGuard, TNavigationHookAfter>,
+      TNavigationHookAfter
+    >;
+  };
+};
 
-export type ICompiledRouterModule = IRouterModule & {
-  compiledRoutes: RouteRecordRaw[]
-  compiledBeforeEach: NavigationGuard[]
-  compiledAfterEach: NavigationHookAfter[]
-}
+export type ICompiledRouterModule<
+  TRouteRecord = unknown,
+  TNavigationGuard = unknown,
+  TNavigationHookAfter = unknown,
+> = IRouterModule<TRouteRecord, TNavigationGuard, TNavigationHookAfter> & {
+  compiledRoutes: TRouteRecord[];
+  compiledBeforeEach: TNavigationGuard[];
+  compiledAfterEach: TNavigationHookAfter[];
+};
