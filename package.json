@@ -1,0 +1,40 @@
+{
+  "name": "vue-modules",
+  "version": "1.0.0",
+  "description": "Provides modularization for vue apps",
+  "keywords": [
+    "vue",
+    "modularization"
+  ],
+  "homepage": "https://github.com/oligraphics/vue-modules#readme",
+  "bugs": {
+    "url": "https://github.com/oligraphics/vue-modules/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oligraphics/vue-modules.git"
+  },
+  "license": "MIT",
+  "author": "Oligraphics",
+  "type": "commonjs",
+  "main": "dist/index.ts",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "rm -rf ./dist && npx tsc",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "@typescript/native": "npm:typescript@^7.0.2",
+    "prettier": "^3.9.6",
+    "typescript": "npm:@typescript/typescript6@^6.0.2",
+    "vitest": "^5.0.0"
+  },
+  "dependencies": {
+    "vue": "^3.5.42",
+    "vue-router": "^5.3.1"
+  }
+}
