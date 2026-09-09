@@ -2,32 +2,19 @@ import type {
   ICompiledRouterModule,
   IRouterModuleCompiler,
 } from "../interfaces/router-module.interface";
-import {
-  createMemoryHistory,
-  createRouter,
-  createWebHistory,
-  type Router,
-} from "vue-router";
+import { type Router, RouteRecordRaw } from "vue-router";
 import type { IModule } from "../interfaces/module.interface";
 
 export function compileRouterFromModule(
   module: IModule,
-  options: {
-    baseUrl?: string;
-  } = {},
+  createRouter: (routes: RouteRecordRaw[]) => Router,
 ): Router {
   const compiledModule = module as ICompiledRouterModule;
   const routes = compiledModule.compiledRoutes ?? [];
   const beforeEach = compiledModule.compiledBeforeEach ?? [];
   const afterEach = compiledModule.compiledAfterEach ?? [];
 
-  const router = createRouter({
-    history:
-      typeof window !== "undefined"
-        ? createWebHistory(options.baseUrl)
-        : createMemoryHistory(options.baseUrl),
-    routes,
-  });
+  const router = createRouter(routes);
 
   for (const guard of beforeEach) {
     router.beforeEach(guard);
