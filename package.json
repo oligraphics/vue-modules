@@ -1,5 +1,5 @@
 {
-  "name": "vue-modules",
+  "name": "@oligraphics/vue-modules",
   "version": "1.0.0",
   "description": "Provides modularization for vue apps",
   "keywords": [
@@ -22,10 +22,14 @@
   "exports": {
     ".": "./dist/index.js"
   },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "rm -rf ./dist && npx tsc",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "prepublishOnly": "npm run build"
   },
   "devDependencies": {
     "@typescript/native": "npm:typescript@^7.0.2",
